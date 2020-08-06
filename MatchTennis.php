@@ -4,7 +4,7 @@
 class MatchTennis
 {
 
-   /**
+   /** 
     * Partie de Tennis
     * En entrée : Une chaine de caractère composée de 0 et/ou 1 ex : 0101010000000001111111111111010101
     * En sortie : Le résultat du match en plus de l'état du jeu/set/match s'il est en cours
