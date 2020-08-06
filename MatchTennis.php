@@ -61,34 +61,35 @@ class MatchTennis
          // Dans le cas de fin du match
          if($nbSetsA == 2 || $nbSetsB == 2){
             $finDuMatch = true;
+            $i++;
             break; // On ne traite pas la fin de la chaine $entree
          }
       }
 
+      $etat = "";
       // On affiche "Jeu en cours" si le jeu n'est pas fini et ""(rien) sinon
-      if($pointsA == 0 and $pointsB == 0)
-         $etatJeu = '';
-      else
-         $etatJeu = ' (Jeu en cours)';
+      if($pointsA != 0 or $pointsB != 0)
+         $etat = ' (Jeu en cours)';
 
          // On affiche "Set en cours" si le set n'est pas fini et ""(rien) sinon
-      if($finDuSet)
-         $etatSet = '';
-      else
-         $etatSet = ' (Set en cours)';
+      else if($finDuSet == false)
+         $etat = ' (Set en cours)';
 
          // On affiche "Match en cours" si le match n'est pas fini et ""(rien) sinon
-      if($finDuMatch)
-         $etatMatch = '';
-      else
-         $etatMatch = ' (Match en cours)';
+      else if($finDuMatch == false)
+         $etat = ' (Match en cours)';
 
       // Si le set n'est pas fini on complète le $score avec le score du set en cours
       if(!$finDuSet){
          $score = $score . $separateur. "A:" . $nbJeuxA . ' ' . 'B:' . $nbJeuxB;
       }
 
-      $score = $score . $etatJeu . $etatSet . $etatMatch;
+      $score = $score . $etat;
+
+      // Dans le cas où le match finit avant la fin du parcours de la chaine $entree
+      if($i != strlen($entree))
+         return "Match déjà fini : $score (Chaine trop longue)";
+
       return $score;
    }
 }
