@@ -4,7 +4,15 @@
 class MatchTennis
 {
 
-   public function partie($entree)
+   /**
+    * Partie de Tennis
+    * En entrée : Une chaine de caractère composée de 0 et/ou 1 ex : 0101010000000001111111111111010101
+    * En sortie : Le résultat du match en plus de l'état du jeu/set/match s'il est en cours
+    *
+    * @param string $entree
+    * @return string
+    */
+   public function partie(string $entree)
    {
       $finDuSet = false;
       $finDuMatch = false;
@@ -12,7 +20,7 @@ class MatchTennis
       $nbJeuxA = $nbJeuxB = 0;
       $nbSetsB = $nbSetsA = 0;
       $nbSets = 0;
-      $score = "";
+      $score = ""; // La chaine de caractère qui va contenir le détail du score
 
       // On parcourt toute la chaine $entree caractère par caractère
       for ($i = 0; $i < strlen($entree); $i++) {
@@ -29,9 +37,9 @@ class MatchTennis
          // Dans le cas où 1 équipe remporte 1 jeu
          if(abs($pointsA - $pointsB) >= 2 AND ($pointsA >= 4 || $pointsB >= 4)){
             if($pointsA > $pointsB)
-               $nbJeuxA++;
+               $nbJeuxA++; // A remporte le JEU
             else
-               $nbJeuxB++;
+               $nbJeuxB++; // B remporte le JEU
 
             $pointsA = $pointsB = 0;
          }
@@ -41,43 +49,46 @@ class MatchTennis
             $score = $score . $separateur. "A:" . $nbJeuxA . ' ' . 'B:' . $nbJeuxB;
             
             if($nbJeuxA > $nbJeuxB)
-               $nbSetsA++;
+               $nbSetsA++; // A remporte le SET
             else
-               $nbSetsB++;
+               $nbSetsB++; // B remporte le SET
             
-            //echo $nbJeuxA . '/' . $nbJeuxB . '/' . $nbSetsA;
             $nbSets++;
             $finDuSet = true;
             $nbJeuxA = $nbJeuxB = 0;
          }
 
-         // Dans le cas de la fin du match
+         // Dans le cas de fin du match
          if($nbSetsA == 2 || $nbSetsB == 2){
             $finDuMatch = true;
-            break;
+            break; // On ne traite pas la fin de la chaine $entree
          }
       }
 
+      // On affiche "Jeu en cours" si le jeu n'est pas fini et ""(rien) sinon
       if($pointsA == 0 and $pointsB == 0)
          $etatJeu = '';
       else
          $etatJeu = ' (Jeu en cours)';
 
+         // On affiche "Set en cours" si le set n'est pas fini et ""(rien) sinon
       if($finDuSet)
          $etatSet = '';
       else
          $etatSet = ' (Set en cours)';
 
+         // On affiche "Match en cours" si le match n'est pas fini et ""(rien) sinon
       if($finDuMatch)
          $etatMatch = '';
       else
          $etatMatch = ' (Match en cours)';
 
+      // Si le set n'est pas fini on complète le $score avec le score du set en cours
       if(!$finDuSet){
-         $score = $score . $separateur. "A:" . $nbJeuxA . ' ' . 'B:' . $nbJeuxB . $etatJeu . $etatSet . $etatMatch;
-      }else {
-         $score = $score . $etatJeu . $etatSet . $etatMatch;
+         $score = $score . $separateur. "A:" . $nbJeuxA . ' ' . 'B:' . $nbJeuxB;
       }
+
+      $score = $score . $etatJeu . $etatSet . $etatMatch;
       return $score;
    }
 }

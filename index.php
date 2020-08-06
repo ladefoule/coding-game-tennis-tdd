@@ -4,6 +4,7 @@ require "MatchTennis.php";
 
 $match = new MatchTennis();
 
+// On fait 5 tests aléatoire de matches de Tennis
 for($i = 0; $i < 5; $i++){
    $testAleatoire = "";
    $tailleEntree = rand(1, 100);
